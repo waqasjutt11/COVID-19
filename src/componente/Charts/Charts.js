@@ -34,13 +34,9 @@ useEffect(()=>{
                 backgroundColor: 'rgba(255, 0, 0, 0.5)',
                 fill: true,
 
-            },{
-                data: dailyData.map(({recovered})=> recovered),
-                label: 'Recovered',
-                borderColor: "#00c99A",
-                fill: true,
-            }]
-        }}
+            }
+            ]}} 
+        
         />
         ) :null
     )
