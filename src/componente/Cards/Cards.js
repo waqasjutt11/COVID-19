@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import CountUp from 'react-countup';
+import './Cards.css'
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
  Counter: {
-    fontFamily: "Segoe Script"
+    fontFamily: "Segoe Script" 
  },
 });
 const  Cards = ({data:{ lastUpdate }})=> {
@@ -37,7 +38,6 @@ const  Cards = ({data:{ lastUpdate }})=> {
     async function fetchData(){
         setLoading(true)
         const ApiResponse = await fetch('https://api.thevirustracker.com/free-api?global=stats');
-        console.log(ApiResponse);
         const data = await ApiResponse.json();
         console.log(data);
         setGlobalData(data);
@@ -49,7 +49,7 @@ const  Cards = ({data:{ lastUpdate }})=> {
         return (
             <div>
             <Grid container spacing={3} justify="center">
-            <Grid item component = {Card} className={classes.root}>
+            <Grid item component = {Card} xs={12} xm={3} className={classes.root}>
             <CardContent>
               <Typography className={classes.title}  gutterBottom>
                 Total Infected
@@ -65,7 +65,7 @@ const  Cards = ({data:{ lastUpdate }})=> {
               </Typography>
             </CardContent>
           </Grid>
-            <Grid item component = {Card} className={classes.root}>
+            <Grid item component = {Card} className={classes.root1}>
             <CardContent>
               <Typography className={classes.title}  gutterBottom>
                 Recoverd
@@ -81,7 +81,7 @@ const  Cards = ({data:{ lastUpdate }})=> {
               </Typography>
             </CardContent>
           </Grid>
-            <Grid item component = {Card} className={classes.root}>
+            <Grid item component = {Card} className={classes.root2}>
             <CardContent>
               <Typography className={classes.title}  gutterBottom>
                 Deaths
@@ -106,26 +106,28 @@ const  Cards = ({data:{ lastUpdate }})=> {
   return (
       <div>
       <Grid container spacing={3} justify="center">
-      <Grid item component = {Card} className={classes.root}>
-      <CardContent>
-        <Typography  className={classes.title}  gutterBottom>
-          Total Infected
+      <Grid item component = {Card}  className={classes.root} >
+      <CardContent className="root">
+        <Typography className={classes.title}  gutterBottom>
+         Total Infected
         </Typography>
-        <Typography variant="h5" component="h2" className={classes.Counter} style={{color: "#ff9100"}} > 
-        <b> 
-        <CountUp start={0} end={ globalData && globalData.results && globalData.results[0].total_cases} duration={2} separator=","/>
-        </b>
+        <div className={classes.recoverd}>
+        <Typography variant="h5" component="h2" className={classes.Counter} style={{color: "#ff9100" }}>
+            <b>
+            <CountUp start={0} end={ globalData && globalData.results && globalData.results[0].total_cases} duration={2} separator=","/>
+           </b>
         </Typography>
+        </div>
         <Typography className={classes.pos} color="textSecondary">
-          {new Date(lastUpdate).toDateString()}
+        {new Date(lastUpdate).toDateString()}
         </Typography>
         <Typography variant="body2" component="p">
-          Total cases of COVID-19
+          Total Cases Of COVID-19 Around the World
         </Typography>
       </CardContent>
     </Grid>
-      <Grid item component = {Card} className={classes.root}>
-      <CardContent>
+    <Grid item component = {Card}  className={classes.root} >
+      <CardContent className="root1">
         <Typography className={classes.title}  gutterBottom>
          Total Recoverd
         </Typography>
@@ -144,8 +146,8 @@ const  Cards = ({data:{ lastUpdate }})=> {
         </Typography>
       </CardContent>
     </Grid>
-      <Grid item component = {Card} className={classes.root}>
-      <CardContent>
+    <Grid item component = {Card}  className={classes.root} >
+      <CardContent className="root2">
         <Typography className={classes.title}  gutterBottom>
           Deaths
         </Typography>
@@ -158,7 +160,7 @@ const  Cards = ({data:{ lastUpdate }})=> {
         {new Date(lastUpdate).toDateString()}
         </Typography>
         <Typography variant="body2" component="p">
-          Total Number of Deaths cause by COVID-19
+          Total Number of Deaths Caused by COVID-19
         </Typography>
       </CardContent>
     </Grid>
