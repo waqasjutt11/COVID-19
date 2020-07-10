@@ -29,80 +29,11 @@ const useStyles = makeStyles({
     fontFamily: "Segoe Script" 
  },
 });
-const  Cards = ({data:{ lastUpdate }})=> {
+const  Cards = ({data:{ confirmed, deaths, recovered, lastUpdate, }})=> {
   const classes = useStyles();
-  const [globalData, setGlobalData] = useState();
-  const [loading, setLoading] = useState(false)
-
-  useEffect(()=>{
-    async function fetchData(){
-        setLoading(true)
-        const ApiResponse = await fetch('https://api.thevirustracker.com/free-api?global=stats');
-        const data = await ApiResponse.json();
-        console.log(data);
-        setGlobalData(data);
-        setLoading(false);
-    }
-    fetchData();
-}, [])
-    if (loading){
-        return (
-            <div>
-            <Grid container spacing={3} justify="center">
-            <Grid item component = {Card} xs={12} xm={3} className={classes.root}>
-            <CardContent>
-              <Typography className={classes.title}  gutterBottom>
-                Total Infected
-              </Typography>
-              <Typography variant="h5" component="h2">
-              loading...
-              </Typography>
-              <Typography className={classes.pos} color="textSecondary">
-                {lastUpdate}
-              </Typography>
-              <Typography variant="body2" component="p">
-                Total Active cases of COVID-19
-              </Typography>
-            </CardContent>
-          </Grid>
-            <Grid item component = {Card} className={classes.root1}>
-            <CardContent>
-              <Typography className={classes.title}  gutterBottom>
-                Recoverd
-              </Typography>
-              <Typography variant="h5" component="h2">
-              loading...
-              </Typography>
-              <Typography className={classes.pos} color="textSecondary">
-                REAL DATE
-              </Typography>
-              <Typography variant="body2" component="p">
-                Total Number of Recoveries from COVID-19
-              </Typography>
-            </CardContent>
-          </Grid>
-            <Grid item component = {Card} className={classes.root2}>
-            <CardContent>
-              <Typography className={classes.title}  gutterBottom>
-                Deaths
-              </Typography>
-              <Typography variant="h5" component="h2">
-              loading...
-              </Typography>
-              <Typography className={classes.pos} color="textSecondary">
-                REAL DATE
-              </Typography>
-              <Typography variant="body2" component="p">
-                Total Number of Deaths cause by COVID-19
-              </Typography>
-            </CardContent>
-          </Grid>
-      </Grid>
-      </div>
-        );
-
-    }
-      
+ if(!confirmed){
+   return 'Loading...';
+ }    
   return (
       <div>
       <Grid container spacing={3} justify="center">
@@ -114,7 +45,7 @@ const  Cards = ({data:{ lastUpdate }})=> {
         <div className={classes.recoverd}>
         <Typography variant="h5" component="h2" className={classes.Counter} style={{color: "#ff9100" }}>
             <b>
-            <CountUp start={0} end={ globalData && globalData.results && globalData.results[0].total_cases} duration={2} separator=","/>
+            <CountUp start={0} end={ confirmed.value } duration={2} separator=","/>
            </b>
         </Typography>
         </div>
@@ -134,7 +65,7 @@ const  Cards = ({data:{ lastUpdate }})=> {
         <div className={classes.recoverd}>
         <Typography variant="h5" component="h2" className={classes.Counter} style={{color: "#00c853" }}>
             <b>
-            <CountUp start={0} end={ globalData && globalData.results && globalData.results[0].total_recovered} duration={2} separator=","/>
+            <CountUp start={0} end={ recovered.value} duration={2} separator=","/>
            </b>
         </Typography>
         </div>
@@ -153,7 +84,7 @@ const  Cards = ({data:{ lastUpdate }})=> {
         </Typography>
         <Typography variant="h5" component="h2" className={classes.Counter} style={{color: "#ff3d00"}} >
             <b>
-            <CountUp start={0} end={ globalData && globalData.results && globalData.results[0].total_deaths} duration={2} separator=","/>
+            <CountUp start={0} end={ deaths.value } duration={2} separator=","/>
             </b>
         </Typography>
         <Typography className={classes.pos} color="textSecondary">

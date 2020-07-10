@@ -4,16 +4,15 @@ import {fetchDailydata} from '../Api/index';
 import './charts.css';
 
 
-function Charts(){
+function Charts({ data:{confirmed, recovered, deaths}, country }){
     const [dailyData, setDailydata ] = useState([])
 useEffect(()=>{
     async function ApiData(){
         const getData = await fetchDailydata();
         setDailydata(getData);
-        console.log("Daily=", setDailydata);
     }
     ApiData();
-});
+}, []);
     const LineChart = (
         dailyData !==0
         ? (
@@ -39,10 +38,38 @@ useEffect(()=>{
         
         />
         ) :null
+
+       
+    );
+    console.log(recovered, deaths, confirmed)
+    const BarChart =(
+             confirmed
+             ?(
+             <Bar
+                 data={{
+                    labels: ['Infected','Recovered', 'Deaths' ],
+                    datasets:[{
+                        label: 'people',
+                        backgroundColor: [
+                            '#ff9100',
+                            '#00c853',
+                            'red',
+                        ],
+                        data: [confirmed.value, recovered.value, deaths.value]
+                        
+                    }]
+                 }}
+                 options={{
+                     legend: {display: false},
+                     title:{display: true, text: `Cureent state in ${country}`}
+                 }}
+                 />
+
+             ): null
     )
     return(
         <div className = "chart">
-        {LineChart}
+        {country ? BarChart : LineChart }
         </div>
        
     )

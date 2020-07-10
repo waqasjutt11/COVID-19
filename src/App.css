@@ -23,7 +23,18 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.image{
+  width: 370px;
+  margin-top: 50px;
+}
+@media(max-width: 770px){
+  .App{
+    margin: 0 10%;
+  }
+  .image{
+    width: 100%;
+  }
+}
 .App-link {
   color: #61dafb;
 }
